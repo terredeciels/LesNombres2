@@ -25,9 +25,22 @@ public class Visu extends Canvas {
     int taille = 4;
     int N;
     int[][] tab;
-    BiConsumer<Integer, Integer> F;
+    BiConsumer<Integer, Integer> F, G;
 
     {
+        G = new BiConsumer<>() {
+            @Override
+            public void accept(Integer x, Integer y) {
+                int val=27;
+                int X = zoom * x;
+                int Y = zoom * y;
+                if (tab[x][y] == val) {
+                    g.setColor(NOIR);
+                    g.drawRect(X, Y, taille, taille);
+                    g.fillRect(X, Y, taille, taille);
+                }
+            }
+        };
         F = new BiConsumer<>() {
 
             @Override
@@ -65,7 +78,7 @@ public class Visu extends Canvas {
                     tracer(X, Y);
                 }
                 if (m > 15) {
-                   // g.setColor(VERT);
+                    // g.setColor(VERT);
                     g.setColor(BLEU4);
                     tracer(X, Y);
                 }
@@ -90,13 +103,24 @@ public class Visu extends Canvas {
 
     public Visu(int[][] matrice, int n, int[] valeurs) {
         Valeurs = valeurs;
-        N = n -1;
+        N = n - 1;
         tab = matrice;
         JFrame frame = new JFrame();
         frame.setSize(WIDTH, HEIGHT);
         frame.add(this);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    public Visu(int[][] frho, int n) {
+        tab = frho;
+        N = n;
+        JFrame frame = new JFrame();
+        frame.setSize(WIDTH, HEIGHT);
+        frame.add(this);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
     }
 
     void tracer(Integer x, Integer y) {
@@ -108,8 +132,8 @@ public class Visu extends Canvas {
     public void paint(Graphics g) {
         super.paint(g);
         this.g = g;
-        range(1, N).forEach(i-> rangeClosed(1, N).forEach(j-> F.accept(i, j)));
-
+        //   range(1, N).forEach(i-> rangeClosed(1, N).forEach(j-> F.accept(i, j)));
+        range(1, N).forEach(i -> rangeClosed(1, N).forEach(j -> G.accept(i, j)));
     }
 
 }
