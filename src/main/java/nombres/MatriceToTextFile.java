@@ -10,8 +10,8 @@ public class MatriceToTextFile {
 
     public static void matriceToTextFile(int[][] tab, String fileaddr, String filename, int n) throws IOException {
         StringBuilder sb = new StringBuilder();
-        range(1, n + 1).forEach(i -> {
-            range(1, n + 1).forEach(j -> sb.append(tab[i][j]).append(","));
+        range(1, n ).forEach(i -> {
+            range(1, n ).forEach(j -> sb.append(tab[i][j]).append(","));
             sb.append("\n");
         });
 
