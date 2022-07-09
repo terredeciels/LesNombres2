@@ -74,6 +74,7 @@ public class MatricesSimple2 extends ArrayList<MatricesSimple2.Paire> {
                 0, tab1D, i * tab2D.length,tab2D.length));
         return tab1D;
     }
+
     public record Paire(Integer i, Integer j) {
     }
 }

@@ -12,7 +12,8 @@ public class Visu extends Canvas {
     int[] Valeurs;
     int WIDTH = 600;
     int HEIGHT = 600;
-    Color NOIR = new Color(50, 50, 50);
+    Color NOIR = new Color(70, 69, 69);
+    Color GRIS50 = new Color(0, 0, 0);
     Color BLEU = new Color(0, 0, 255);
     Color BLEU1 = new Color(50, 50, 251);
     Color BLEU2 = new Color(100, 100, 255);
@@ -21,24 +22,59 @@ public class Visu extends Canvas {
     Color ROUGE = new Color(255, 0, 0);
     Color VERT = new Color(0, 255, 0);
     Graphics g;
-    int zoom = 4;
-    int taille = 4;
+    int zoom = 1;
+    int taille = 1;
     int N;
     int[][] tab;
     BiConsumer<Integer, Integer> F, G;
+    int a = 4;
 
     {
         G = new BiConsumer<>() {
             @Override
             public void accept(Integer x, Integer y) {
-                int val=27;
-                int X = zoom * x;
-                int Y = zoom * y;
-                if (tab[x][y] == val) {
-                    g.setColor(NOIR);
-                    g.drawRect(X, Y, taille, taille);
-                    g.fillRect(X, Y, taille, taille);
+
+//                int X = zoom * x;
+//                int Y = zoom * y;
+                if (tab[x][y] == 15) {
+                    g.setColor(BLEU);
+//                    g.drawRect(X, Y, taille, taille);
+//                    g.fillRect(X, Y, taille, taille);
+
+//                for (int d = 1; d <= N; d += a) {
+//                    for (int k = 1; k <= N; k += a) {
+                    for (int L = x; L < x + a; L++) {
+                        for (int l = y; l < y + a; l++) {
+                            int X = zoom * L;
+                            int Y = zoom * l;
+                            g.drawRect(X, Y, taille, taille);
+                            g.fillRect(X, Y, taille, taille);
+
+                        }
+                    }
+//                    }
+//                }
                 }
+               else if (tab[x][y] == 30) {
+                    g.setColor(Color.RED);
+//                    g.drawRect(X, Y, taille, taille);
+//                    g.fillRect(X, Y, taille, taille);
+
+//                for (int d = 1; d <= N; d += a) {
+//                    for (int k = 1; k <= N; k += a) {
+                    for (int L = x; L < x + a; L++) {
+                        for (int l = y; l < y + a; l++) {
+                            int X = zoom * L;
+                            int Y = zoom * l;
+                            g.drawRect(X, Y, taille, taille);
+                            g.fillRect(X, Y, taille, taille);
+
+                        }
+                    }
+//                    }
+//                }
+                }
+
             }
         };
         F = new BiConsumer<>() {
@@ -133,7 +169,9 @@ public class Visu extends Canvas {
         super.paint(g);
         this.g = g;
         //   range(1, N).forEach(i-> rangeClosed(1, N).forEach(j-> F.accept(i, j)));
-        range(1, N).forEach(i -> rangeClosed(1, N).forEach(j -> G.accept(i, j)));
+        range(1, N)
+                .forEach(i -> rangeClosed(1, N)
+                        .forEach(j -> G.accept(i, j)));
     }
 
 }

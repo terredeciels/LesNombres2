@@ -15,7 +15,7 @@ import static nombres.MatriceToTextFile.matriceToTextFile;
 
 public class MatricesSimple3 extends ArrayList<MatricesSimple3.Paire> {
 
-    private final int N = 256;
+    private final int N = 512;
     private final int[][] tab = new int[N + 1][N + 1];
 
     //  String chemin = "/home/tdc/IdeaProjects/LesNombres2/src/main/java/nombres/base/simple/";
@@ -23,25 +23,19 @@ public class MatricesSimple3 extends ArrayList<MatricesSimple3.Paire> {
             "\\src\\main\\java\\nombres\\base\\simple\\";
 
     public MatricesSimple3() throws IOException {
-
         int[][] f = f();
         int[] valeurs = IntStream.of(to1Dtab(f)).distinct().sorted().toArray();
         System.out.println(Arrays.toString(valeurs));
         Map<Integer, Integer> f1 = new HashMap<>();
-        //int val=2;
         for (int val : valeurs) {
             int count = 0;
             for (int i = 1; i < N; i++) {
                 for (int j = 1; j < N; j++) {
-                    //System.out.print(f[i][j]+",");
                     if (f[i][j] == val) count++;
                 }
-                //System.out.println();
             }
             f1.put(val, count);
         }
-        //System.out.println(Arrays.toString(f));
-        //System.out.println(count);
         matriceToTextFile(f, chemin, "f_", N);
         fonctionToTextFile(f1, chemin, "F1D_", N);
     }
