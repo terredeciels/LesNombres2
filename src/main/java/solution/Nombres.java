@@ -3,9 +3,7 @@ package solution;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.lang.System.arraycopy;
@@ -17,12 +15,14 @@ public class Nombres {
     private final int[][] tab = new int[M][M];
     private final List<A>[][] ltab = new ArrayList[M][M];
     private final List<A> X = new ArrayList<>();
+    private final Map<Integer, Integer> hvaleurs = new HashMap<>();
     //  String chemin = "/home/tdc/IdeaProjects/LesNombres2/src/main/java/simple/";
     String chemin = "C:\\Users\\gille\\IdeaProjects\\LesNombres2" +
             "\\src\\main\\java\\solution\\";
 
     private Nombres() throws IOException {
         for (int i = 1; i < M; i++) for (int j = 1; j < M; j++) ltab[i][j] = new ArrayList<>();
+        for (int i = 1; i < M; i++) for (int j = 1; j < M; j++) X.add(new A(new Paire(i, j), i * j));
         ltab();
         int[][] tab = tab();
         int[] valeurs = valeurs();
@@ -37,9 +37,8 @@ public class Nombres {
         List<A> classe2 = classe(val);
         System.out.println(classe2);
 
-//        for (int val : valeurs) {
-//
-//        }
+        for (int v : valeurs) hvaleurs.put(v, classe(v).size());
+        fonctionToTextFile(hvaleurs, chemin, "hval_", N);
     }
 
     public static void main(String[] args) throws IOException {
@@ -52,8 +51,7 @@ public class Nombres {
 
     private List<A> classe(int val) {
         List<A> L = new ArrayList<>();
-        for (A a1 : X)
-            L.addAll(ltab[a1.p.i][a1.p.j].stream().filter(a -> a.x == val).toList());
+        for (A a1 : X) L.addAll(ltab[a1.p.i][a1.p.j].stream().filter(a -> a.x == val).toList());
         return L.stream().distinct().toList();
     }
 
@@ -62,18 +60,14 @@ public class Nombres {
     }
 
     private int[][] tab() {
-        for (int i = 1; i < M; i++)
-            for (int j = 1; j < M; j++)
-                tab[i][j] = ltab[i][j].size();
+        for (A a : X) tab[a.p.i][a.p.j] = ltab[a.p.i][a.p.j].size();
         return tab;
     }
 
     private List<A>[][] ltab() {
-        for (int i = 1; i < M; i++) for (int j = 1; j < M; j++) X.add(new A(new Paire(i, j), i * j));
-        for (A a1 : X)
-            for (A a2 : X)
-                if (a1.x == a2.x)
-                    ltab[a1.p.i][a1.p.j].add(new A(new Paire(a2.p.i, a2.p.j), a2.x));
+        X.forEach(a1 -> X.stream()
+                .filter(a2 -> a1.x == a2.x)
+                .forEach(a2 -> ltab[a1.p.i][a1.p.j].add(new A(new Paire(a2.p.i, a2.p.j), a2.x))));
         return ltab;
     }
 
@@ -90,6 +84,18 @@ public class Nombres {
             sb.append("\n");
         });
 
+        FileWriter fw = new FileWriter(fileaddr + filename + n + ".txt", false);
+        BufferedWriter output = new BufferedWriter(fw);
+        output.write(sb.toString());
+        output.flush();
+        output.close();
+
+    }
+
+    private void fonctionToTextFile(Map<Integer, Integer> F, String fileaddr, String filename, int n) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        F.forEach((key, value) -> sb.append(key).append(",").append(value).append("\n"));
+        System.out.println(sb);
         FileWriter fw = new FileWriter(fileaddr + filename + n + ".txt", false);
         BufferedWriter output = new BufferedWriter(fw);
         output.write(sb.toString());
