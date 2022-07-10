@@ -15,16 +15,16 @@ import static nombres.MatriceToTextFile.matriceToTextFile;
 public class MatricesBase extends ArrayList<MatricesBase.Paire> {
 
     int N = 128;
-//    String chemin = "C:\\Users\\gille\\IdeaProjects\\LesNombres" +
+    //    String chemin = "C:\\Users\\gille\\IdeaProjects\\LesNombres" +
 //            "\\src\\main\\java\\nombres\\base\\";
     String chemin = "/home/tdc/IdeaProjects/LesNombres2/src/main/java/nombres/base/";
 
     public MatricesBase() throws IOException {
         int[][] f = f();
-       matriceToTextFile(f, chemin, "f_", N);
+        matriceToTextFile(f, chemin, "f_", N);
         int[] valeurs = IntStream.of(to1Dtab(f)).distinct().sorted().toArray();
         System.out.println(Arrays.toString(valeurs));
-        new Visu(f, N,valeurs);
+        new Visu(f, N, valeurs);
     }
 
     public static void main(String[] args) throws IOException {
@@ -42,8 +42,8 @@ public class MatricesBase extends ArrayList<MatricesBase.Paire> {
     }
 
     int[] to1Dtab(int[][] tab2D) {
-        int[] tab1D = new int[(int) pow(N+1,2)];
-        range(0, N+1).forEach(i -> arraycopy(tab2D[i], 0, tab1D, i * (N+1),N+1));
+        int[] tab1D = new int[(int) pow(N + 1, 2)];
+        range(0, N + 1).forEach(i -> arraycopy(tab2D[i], 0, tab1D, i * (N + 1), N + 1));
         return tab1D;
     }
 

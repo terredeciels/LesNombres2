@@ -17,7 +17,7 @@ public class Matrice1D {
 
     List<Integer> Prod = new ArrayList<>();
     List<Integer> ProdS;
-    int N=32;
+    int N = 32;
 
     public Matrice1D() throws IOException {
         range(1, N).forEach(i -> range(1, N).forEach(j -> Prod.add(i * j)));
@@ -28,15 +28,15 @@ public class Matrice1D {
         fonctionToTextFile(F, chemin, "Fonction2_", N);
     }
 
+    public static void main(String[] args) throws IOException {
+        new Matrice1D();
+    }
+
     int d(int n) {
         final int[] nbdiv = {0};
         range(1, N).forEach(i -> range(1, N).forEach(j -> {
             if (i * j == n) nbdiv[0]++;
         }));
         return nbdiv[0];
-    }
-
-    public static void main(String[] args) throws IOException {
-        new Matrice1D();
     }
 }

@@ -54,8 +54,7 @@ public class Visu extends Canvas {
                     }
 //                    }
 //                }
-                }
-               else if (tab[x][y] == 30) {
+                } else if (tab[x][y] == 30) {
                     g.setColor(Color.RED);
 //                    g.drawRect(X, Y, taille, taille);
 //                    g.fillRect(X, Y, taille, taille);

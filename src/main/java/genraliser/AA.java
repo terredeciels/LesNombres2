@@ -14,7 +14,7 @@ public class AA {
 
     int[][] tf = new int[N + 1][N + 1];
     int[][] tF = new int[N + 1][N + 1];
-     BiFunction<Integer, Integer, Integer> f = (i, j) -> i * j;
+    BiFunction<Integer, Integer, Integer> f = (i, j) -> i * j;
     //BiFunction<Integer, Integer, Integer> f = (i, j) -> i + j + i * j;
 
     // BiFunction<Integer, Integer, Integer> f = Integer::sum;

@@ -1,47 +1,65 @@
-package nombres.base.simple;
+package simple;
+
+import visualiser.Visu;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 import static java.lang.Math.pow;
 import static java.lang.System.arraycopy;
 import static java.util.stream.IntStream.range;
-import static nombres.FonctionToTextFile.fonctionToTextFile;
 import static nombres.MatriceToTextFile.matriceToTextFile;
 
-public class MatricesSimple3 extends ArrayList<MatricesSimple3.Paire> {
+public class MatricesSimple2 extends ArrayList<MatricesSimple2.Paire> {
 
-    private final int N = 512;
+    private final int N = 128;
     private final int[][] tab = new int[N + 1][N + 1];
-
+    private final int[][] rho = new int[N + 1][N + 1];
+    double[][] frhoDouble = new double[N + 1][N + 1];
+    //int count;
+    int a = 2;
     //  String chemin = "/home/tdc/IdeaProjects/LesNombres2/src/main/java/nombres/base/simple/";
     String chemin = "C:\\Users\\gille\\IdeaProjects\\LesNombres2" +
             "\\src\\main\\java\\nombres\\base\\simple\\";
 
-    public MatricesSimple3() throws IOException {
+    public MatricesSimple2() throws IOException {
+
         int[][] f = f();
-        int[] valeurs = IntStream.of(to1Dtab(f)).distinct().sorted().toArray();
+        int[][] frho = frho();
+        int[] valeurs = IntStream.of(to1Dtab(frho)).distinct().sorted().toArray();
         System.out.println(Arrays.toString(valeurs));
-        Map<Integer, Integer> f1 = new HashMap<>();
-        for (int val : valeurs) {
-            int count = 0;
-            for (int i = 1; i < N; i++) {
-                for (int j = 1; j < N; j++) {
-                    if (f[i][j] == val) count++;
-                }
+        double max = IntStream.of(to1Dtab(frho)).max().getAsInt() + 0.0;
+
+        for (int d = 1; d <= N; d++) {
+            for (int k = 1; k <= N; k++) {
+                frhoDouble[d][k] = frho[d][k] / max;
             }
-            f1.put(val, count);
         }
+
         matriceToTextFile(f, chemin, "f_", N);
-        fonctionToTextFile(f1, chemin, "F1D_", N);
+        matriceToTextFile(frho, chemin, "rho_" + a + "_", N);
+        matriceToTextFile(frhoDouble, chemin, "rho_" + a + "_Double_", N);
+        //
+        new Visu(frho, N);
     }
 
     public static void main(String[] args) throws IOException {
-        new MatricesSimple3();
+        new MatricesSimple2();
+    }
+
+    private int[][] frho() {
+        for (int d = 1; d <= N; d += a) {
+            for (int k = 1; k <= N; k += a) {
+                for (int L = d; L < d + a; L++) {
+                    for (int l = k; l < k + a; l++) {
+                        rho[d][k] += tab[L][l];
+                    }
+                }
+            }
+        }
+        return rho;
     }
 
     private int[][] f() {

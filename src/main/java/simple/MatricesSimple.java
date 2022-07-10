@@ -1,4 +1,4 @@
-package nombres.base.simple;
+package simple;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -20,7 +20,7 @@ public class Partition {
             StringBuilder sb = new StringBuilder();
             int finalNiv = niv;
             mapCount = Prod.stream().collect(Collectors
-                            .partitioningBy(p -> (p == finalNiv), Collectors.counting()));
+                    .partitioningBy(p -> (p == finalNiv), Collectors.counting()));
             // mapCount.forEach((Boolean key, Long count) -> System.out.println(key + " count -> " + count));
 
             for (Map.Entry<Boolean, Long> mapentry : mapCount.entrySet())
